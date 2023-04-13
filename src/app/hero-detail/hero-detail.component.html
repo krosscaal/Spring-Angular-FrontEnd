@@ -1,0 +1,65 @@
+
+<div class="container">
+
+    <div *ngIf="hero">
+        <h2>{{hero.name | uppercase}} Detalhes</h2>
+        <div><span>Id: </span> {{hero.id}}</div>
+
+        <form #heroForm="ngForm">
+     
+            <div class="form-group">
+                <label for="name">NOME:</label>
+                <input type="text" class="form-control" id="name"
+                required
+                [(ngModel)]="hero.name" name="name"
+                #name="ngModel">
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    Nome é obrigatorio
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="power">Poder do Heroe</label>
+                <select class="form-control" id="power"
+                required
+                [(ngModel)] = "hero.power" name="powerd">
+                    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email do Heroe</label>
+                <input type="text" class="form-control" id="email"
+                required
+                [(ngModel)]="hero.email" name="email">
+            </div>
+
+            <button type="button" class="btn btn-primary" (click)="goBack()">Voltar</button>
+            <button type="button" class="btn btn-success" [disabled]="!heroForm.form.valid" (click)="save()">Salvar</button>
+
+        </form>
+        
+    </div>
+    
+</div>
+<!--
+<div *ngIf="hero">
+    <h2>{{hero.name | uppercase}} Detalhes</h2>
+    <div><span>Id: </span> {{hero.id}}</div>
+    <div>
+        <label for="hero-name">Nome do Heroe: </label>
+        <input id="hero-name" [(ngModel)]="hero.name" placeholder="Nome:">
+        
+        <label for="hero-power"> Poder do Heroe: </label>
+        <input id="hero-power" [(ngModel)]="hero.power" placeholder="Poder">
+        
+        <label for="hero-contact"> Email do Heroe: </label>
+        <input id="hero-contact" [(ngModel)]="hero.email" placeholder="Email:">
+
+    </div>
+    <button type="button" (click)="goBack()">go back</button>
+    <button type="button" (click)="save()">Save</button>
+</div>
+-->
+
+
