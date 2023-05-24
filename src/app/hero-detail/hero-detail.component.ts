@@ -4,6 +4,8 @@ import { Hero } from '../hero';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../hero.service';
+import { Power } from "../Power";
+import { PowerService } from "../power.service";
 
 @Component({
   selector: 'app-hero-detail',
@@ -14,16 +16,20 @@ export class HeroDetailComponent implements OnInit {
 
   powers = ['Muito Experto', 'Super Flexible','Controla o Fogo','Controla o tempo'];
 
+  pwrs: Power[] = [];
+
   hero: Hero | undefined;
 
-  constructor( 
-    private route: ActivatedRoute, 
-    private heroService: HeroService, 
-    private location: Location
+  constructor(
+    private route: ActivatedRoute,
+    private heroService: HeroService,
+    private location: Location,
+    private powerService: PowerService
     ) { }
 
   ngOnInit(): void {
     this.getHero();
+    this.getPowers();
   }
 
   getHero():void{
@@ -38,8 +44,13 @@ export class HeroDetailComponent implements OnInit {
 
   save():void {
     if (this.hero) {
-      this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
+      this.heroService.updateHeroDto(this.hero).subscribe(() => this.goBack());
     }
+  }
+
+  getPowers():void {
+    this.powerService.getPowers()
+      .subscribe(pwrs => this.pwrs = pwrs);
   }
 
 }

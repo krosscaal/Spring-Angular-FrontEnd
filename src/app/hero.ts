@@ -1,8 +1,9 @@
+
 export interface Hero{
 
-    id: number;
+    id: any;
     name: string;
-    power: string;
+    power: number;
     email: string;
-    
+
 }

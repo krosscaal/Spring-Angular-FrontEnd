@@ -18,18 +18,20 @@
         <tr class="table-info">
             <th scope="col">Id</th>
             <th scope="col">Alias do Heroe</th>
+            <th scope="col">Power</th>
             <th scope="col">Ações</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let he of heroes">
+        <tr *ngFor="let he of listOfHeroes">
             <th scope="row" >{{he.id}}</th>
             <td>{{he.name}}</td>
+            <td>{{he.power.power}}</td>
             <td>
                 <a routerLink="/detail/{{he.id}}" class="edit">
                     <i class="fa-solid fa-user-pen"></i>
                 </a>
-                <button type="button" class="delete" title="delete hero" (click)="delete(he)">
+                <button type="button" class="delete" title="delete hero" (click)="delete2(he)">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
             </td>

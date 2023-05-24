@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { MenssageService } from './menssage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Hero1 } from './hero1';
+import {Hero2} from "./hero2";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,14 @@ export class HeroService {
       tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes',[]))
     );
+  }
+  /** método requisição servidor lista de todos */
+  getHeroes2():Observable<Hero2[]>{
+    return this.http.get<Hero2[]>(this.heroesUrl+'/list')
+      .pipe(
+        tap(_ => this.log('fetched heroes')),
+        catchError(this.handleError<Hero2[]>('getHeroes',[]))
+      );
   }
 
 /**
@@ -64,6 +73,7 @@ export class HeroService {
     this.messageService.add(`HeroService: fetched hero id=${id}`);
     return of(hero);
   }
+
   /** método http get id */
   getHero(id:number): Observable<Hero> {
     const url = `${this.heroesUrl+'/hero'}/${id}`;
@@ -73,7 +83,7 @@ export class HeroService {
     );
   }
 
-  /** PUT update the hero on the server */
+  /** PUT update the hero on http://localhost:8080/heroes/update-hero/id of Hero.ts */
   updateHero(hero: Hero): Observable<any> {
     const url = `${this.heroesUrl+'/update-hero'}/${hero.id}`;
     return this.http.put(url, hero, this.httpOptions).pipe(
@@ -81,10 +91,18 @@ export class HeroService {
       catchError(this.handleError<any>('updateHero'))
     );
   }
+  /** PUT update the hero on http://localhost:8080/heroes/update/id of Hero.ts */
+  updateHeroDto(hero: Hero): Observable<any> {
+    const url = `${this.heroesUrl+'/update'}/${hero.id}`;
+    return this.http.put(url, hero, this.httpOptions).pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
 
-/** POST add a new Hero to the server */
+/** POST add a new Hero to the server of Hero.ts*/
   addHero(hero: Hero): Observable<Hero> {
-    hero.power='força total';
+    hero.power=2;
     hero.email=hero.name+'@heroes.gmail.com.br';
     return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
@@ -94,15 +112,12 @@ export class HeroService {
 
   /** POST add new Hero of class Hero1.ts */
   addHeroFull(hero: Hero1): Observable<Hero1>{
-    return this.http.post<Hero1>(this.heroesUrl, hero, this.httpOptions).pipe(
+    return this.http.post<Hero1>(this.heroesUrl+'/new', hero, this.httpOptions).pipe(
       tap((newHero: Hero1) => this.log(`add hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero1>(`addHero`))
     );
 
   }
-
-
-
 
 /** DELETE erase the hero from the server  */
 deleteHero(id: number): Observable<Hero> {

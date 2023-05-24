@@ -1,10 +1,12 @@
-<h1>{{title}}</h1>
-<nav class="navbar navbar-dark bg-primary">
-    <a routerLink="/dashboard">DashBoard</a>
-    
-    <a routerLink="/heroes">Heroes</a>
+<div class="main">
+  <h1>{{title}}</h1>
+  <nav class="navbar navbar-dark bg-primary">
+      <a routerLink="/dashboard">DashBoard</a>
 
-    <a routerLink="/form">Novo Heroe</a>
-</nav>
-<router-outlet></router-outlet>
-<app-menssages></app-menssages>
+      <a routerLink="/heroes">Heroes</a>
+
+      <a routerLink="/form">Novo Heroe</a>
+  </nav>
+  <router-outlet></router-outlet>
+  <app-menssages></app-menssages>
+</div>

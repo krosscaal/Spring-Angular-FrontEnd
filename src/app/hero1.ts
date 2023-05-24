@@ -1,9 +1,10 @@
+
 export class Hero1 {
     constructor(
-        public id: number,
         public name: string,
-        public power: string,
+        public power: number,
         public email?: string,
+        public id?: number,
     ){ }
 
 }
